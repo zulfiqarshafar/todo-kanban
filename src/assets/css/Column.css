@@ -5,6 +5,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  font-size: 12px;
+  line-height: 20px;
 }
 
 .column-group-1 {
@@ -33,6 +35,10 @@
   width: fit-content;
 }
 
+.column-month {
+  font-weight: bold;
+}
+
 .column-group-1 .column-title {
   border: 1px solid #4DB5BC;
   color: #01959F;
@@ -51,4 +57,15 @@
 .column-group-4 .column-title {
   border: 1px solid #B8DBCA;
   color: #43936C;
+}
+
+.new-task-btn {
+  width: fit-content;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.new-task-btn:hover {
+  cursor: pointer;
 }
