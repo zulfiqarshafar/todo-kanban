@@ -1,5 +1,5 @@
 import './App.css'
-import Board from './components/Board'
+import Column from './components/Column'
 
 function App() {
 
@@ -10,10 +10,10 @@ function App() {
       </header>
 
       <article id='content'>
-        <Board />
-        <Board />
-        <Board />
-        <Board />
+        <Column columnClass='column-group-1' columnTitle='Group Task 1' columnMonth='January - March' />
+        <Column columnClass='column-group-2' columnTitle='Group Task 2' columnMonth='April - June' />
+        <Column columnClass='column-group-3' columnTitle='Group Task 3' columnMonth='July - September' />
+        <Column columnClass='column-group-4' columnTitle='Group Task 4' columnMonth='October - December' />
       </article>
     </>
   )
