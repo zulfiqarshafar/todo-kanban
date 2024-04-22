@@ -1,0 +1,8 @@
+.task {
+  background-color: #FAFAFA;
+  padding: 16px;
+}
+
+.task-title {
+  border-bottom: 1px dashed #E0E0E0;
+}
