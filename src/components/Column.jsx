@@ -1,9 +1,16 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import createEditModalSlice from "../reducers/createEditModalSlice";
 import Task from './Task'
 import plusIcon from '../assets/images/plus-circle.svg'
 import '../assets/css/Column.css'
 
-function Column({ columnClass, columnTitle, columnMonth, setIsOpenCreateEditTask }) {
+function Column({ columnId, columnClass, columnTitle, columnMonth }) {
+  const dispatch = useDispatch();
+
+  function handleOpenModal() {
+    dispatch(createEditModalSlice.actions.toggleModal({ columnId: columnId, createOrEdit: 'create' }));
+  }
 
   return (
     <section className={`column ${columnClass}`}>
@@ -16,7 +23,7 @@ function Column({ columnClass, columnTitle, columnMonth, setIsOpenCreateEditTask
         <div className="task-title no-task-title">No Task</div>
       </section>
 
-      <div className='new-task-btn' onClick={() => setIsOpenCreateEditTask(true)}>
+      <div className='new-task-btn' onClick={handleOpenModal}>
         <img src={plusIcon} alt="Plus icon" />
         New Task
       </div>

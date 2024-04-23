@@ -1,14 +1,23 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import closeIcon from '../assets/images/close.svg'
 import '../assets/css/AddEditTaskModal.css'
+import createEditModalSlice from '../reducers/createEditModalSlice';
 
-function AddEditTaskModal({ setIsOpenCreateEditTask }) {
+function AddEditTaskModal() {
+  const createEditModal = useSelector(state => state.createEditModal);
+  const dispatch = useDispatch();
+
+  function handleCloseModal() {
+    dispatch(createEditModalSlice.actions.toggleModal({ columnId: null, createOrEdit: null }));
+  }
+
   return (
     <div className='create-edit-task-modal-overlay'>
       <article className='create-edit-task-modal'>
         <header>
-          CreateEdit Task
-          <span id='close-btn' onClick={() => setIsOpenCreateEditTask(false)}>
+          {createEditModal.createOrEdit == 'create' ? 'Create' : 'Edit'} Task
+          <span id='close-btn' onClick={handleCloseModal}>
             <img src={closeIcon} alt="Close icon" />
           </span>
         </header>
@@ -23,7 +32,7 @@ function AddEditTaskModal({ setIsOpenCreateEditTask }) {
           </div>
         </section>
         <footer>
-          <button onClick={() => setIsOpenCreateEditTask(false)}>Cancel</button>
+          <button onClick={handleCloseModal}>Cancel</button>
           <button id='save-task-btn'>Save Task</button>
         </footer>
       </article>

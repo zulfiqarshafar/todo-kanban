@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import './App.css'
+import { useSelector } from 'react-redux';
 import Column from './components/Column'
 import AddEditTaskModal from './components/AddEditTaskModal';
+import './App.css'
 
 function App() {
-  const [isOpenCreateEditTask, setIsOpenCreateEditTask] = useState(false);
+  const createEditModal = useSelector(state => state.createEditModal);
 
   return (
     <>
@@ -14,33 +14,33 @@ function App() {
 
       <article id='content'>
         <Column
+          columnId='1'
           columnClass='column-group-1'
           columnTitle='Group Task 1'
           columnMonth='January - March'
-          setIsOpenCreateEditTask={setIsOpenCreateEditTask}
         />
         <Column
+          columnId='2'
           columnClass='column-group-2'
           columnTitle='Group Task 2'
           columnMonth='April - June'
-          setIsOpenCreateEditTask={setIsOpenCreateEditTask}
         />
         <Column
+          columnId='3'
           columnClass='column-group-3'
           columnTitle='Group Task 3'
           columnMonth='July - September'
-          setIsOpenCreateEditTask={setIsOpenCreateEditTask}
         />
         <Column
+          columnId='4'
           columnClass='column-group-4'
           columnTitle='Group Task 4'
           columnMonth='October - December'
-          setIsOpenCreateEditTask={setIsOpenCreateEditTask}
         />
       </article>
 
       {
-        isOpenCreateEditTask && <AddEditTaskModal setIsOpenCreateEditTask={setIsOpenCreateEditTask} />
+        createEditModal.isOpen && <AddEditTaskModal />
       }
     </>
   )
