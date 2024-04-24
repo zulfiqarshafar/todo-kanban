@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { sortData } from "../utilities";
 
 const taskSlice = createSlice({
   name: "task",
@@ -68,14 +69,15 @@ const taskSlice = createSlice({
       })
       .addCase(createTask.fulfilled, (state, action) => {
         const columnName = `column_${action.payload.columnId}`;
-        state.tasks[columnName].push(action.payload.task);
+        state.tasks[columnName].unshift(action.payload.task);
       })
       .addCase(moveTask.fulfilled, (state, action) => {
         const prevColumnName = `column_${action.payload.prevColumnId}`;
-        state.tasks[prevColumnName] = state.tasks[prevColumnName].filter(task => task.id != action.payload.task.id)
+        state.tasks[prevColumnName] = sortData(state.tasks[prevColumnName].filter(task => task.id != action.payload.task.id));
 
         const columnName = `column_${action.payload.columnId}`;
         state.tasks[columnName].push(action.payload.task);
+        state.tasks[columnName] = sortData(state.tasks[columnName]);
       })
   }
 });
@@ -86,7 +88,8 @@ export const fetchTasks = createAsyncThunk('task/fetchTasks', async (payload) =>
     headers: {
       "Authorization": `Bearer ${payload.userToken}`,
     }});
-  const taskList = await response.json();
+  const responseList = await response.json();
+  const taskList = sortData(responseList);
   return { taskList, columnId: payload.columnId };
 })
 
@@ -104,7 +107,7 @@ export const createTask = createAsyncThunk('task/createTask', async (payload) =>
   });
   const newTask = await response.json();
   return {
-    task: { id: newTask.id, todo_id: newTask.todo_id, name: newTask.name, progress_percentage: newTask.progress_percentage},
+    task: { id: newTask.id, todo_id: newTask.todo_id, name: newTask.name, progress_percentage: newTask.progress_percentage, created_at: newTask.created_at},
     columnId: payload.columnId
   };
 })
@@ -123,7 +126,7 @@ export const moveTask = createAsyncThunk('task/moveTask', async (payload) => {
   });
   const newTask = await response.json();
   return {
-    task: { id: newTask.id, todo_id: newTask.todo_id, name: newTask.name, progress_percentage: newTask.progress_percentage},
+    task: { id: newTask.id, todo_id: newTask.todo_id, name: newTask.name, progress_percentage: newTask.progress_percentage, created_at: newTask.created_at},
     columnId: payload.task.targetColumnId,
     prevColumnId: payload.task.columnId
   };
