@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import createEditModalSlice from "../reducers/createEditModalSlice";
+import modalSlice from "../reducers/modalSlice";
 import Task from './Task'
 import plusIcon from '../assets/images/plus-circle.svg'
 import '../assets/css/Column.css'
@@ -8,7 +8,7 @@ function Column({ columnId, columnClass, columnTitle, columnMonth, taskList }) {
   const dispatch = useDispatch();
 
   function handleOpenModal() {
-    dispatch(createEditModalSlice.actions.toggleModal({ columnId: columnId, createOrEdit: 'create' }));
+    dispatch(modalSlice.actions.toggleCreateEditModal({ columnId: columnId, createOrEdit: 'create' }));
   }
 
   return (

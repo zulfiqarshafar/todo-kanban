@@ -42,7 +42,7 @@ function Task({ task }) {
           </div>
         </section>
       {
-        isDropdownOpen && <ActionDropdown selectedTask={ task } ref={ dropdownRef } />
+        isDropdownOpen && <ActionDropdown selectedTask={ task } setIsDropdownOpen={setIsDropdownOpen} ref={ dropdownRef } />
       }
       </section>
 

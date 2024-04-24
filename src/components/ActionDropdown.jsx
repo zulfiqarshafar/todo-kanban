@@ -1,13 +1,14 @@
 import { forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { moveTask } from '../reducers/taskSlice';
+import modalSlice from '../reducers/modalSlice';
 import '../assets/css/ActionDropdown.css';
 import { RightArrowIcon } from './icons';
 import { LeftArrowIcon } from './icons';
 import { EditIcon } from './icons';
 import { TrashIcon } from './icons';
 
-const ActionDropdown = forwardRef(({ selectedTask }, ref) => {
+const ActionDropdown = forwardRef(({ selectedTask, setIsDropdownOpen }, ref) => {
   const userData = useSelector(state => state.user);
   const dispatch = useDispatch();
 
@@ -17,6 +18,11 @@ const ActionDropdown = forwardRef(({ selectedTask }, ref) => {
 
   function handleMoveLeft(task) {
     dispatch(moveTask({ userToken: userData.token, task: { id: task.id, name: task.name, columnId: task.todo_id, targetColumnId: task.todo_id - 1 } }));
+  }
+
+  function handleDelete(task) {
+    setIsDropdownOpen(false);
+    dispatch(modalSlice.actions.toggleDeleteModal({ taskId: task.id, columnId: task.todo_id }));
   }
 
   return (
@@ -34,7 +40,7 @@ const ActionDropdown = forwardRef(({ selectedTask }, ref) => {
           <EditIcon />
           Edit
         </li>
-        <li className='action-delete'>
+        <li className='action-delete' onClick={() => handleDelete(selectedTask)}>
           <TrashIcon />
           Delete
         </li>

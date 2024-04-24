@@ -9,14 +9,6 @@ const taskSlice = createSlice({
     error: null
   },
   reducers: {
-    taskLoaded: (state, action) => {
-      const columnName = `column_${action.payload.columnId}`;
-      console.log(columnName);
-      return {
-        ...state,
-        columnName: action.payload.data
-      };
-    },
     // editTask: (state, action) => {
     //   const {
     //     title,
@@ -46,12 +38,6 @@ const taskSlice = createSlice({
     //   const task = prevCol.tasks.splice(taskIndex, 1)[0];
     //   board.columns.find((col, i) => i === colIndex).tasks.push(task);
     // },
-    // deleteTask: (state, action) => {
-    //   const payload = action.payload;
-    //   const board = state.find((board) => board.isActive);
-    //   const col = board.columns.find((col, i) => i === payload.colIndex);
-    //   col.tasks = col.tasks.filter((task, i) => i !== payload.taskIndex);
-    // },
   },
   extraReducers(builder) {
     builder
@@ -78,6 +64,10 @@ const taskSlice = createSlice({
         const columnName = `column_${action.payload.columnId}`;
         state.tasks[columnName].push(action.payload.task);
         state.tasks[columnName] = sortData(state.tasks[columnName]);
+      })
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        const columnName = `column_${action.payload.columnId}`;
+        state.tasks[columnName] = sortData(state.tasks[columnName].filter(task => task.id != action.payload.taskId));
       })
   }
 });
@@ -129,6 +119,19 @@ export const moveTask = createAsyncThunk('task/moveTask', async (payload) => {
     task: { id: newTask.id, todo_id: newTask.todo_id, name: newTask.name, progress_percentage: newTask.progress_percentage, created_at: newTask.created_at},
     columnId: payload.task.targetColumnId,
     prevColumnId: payload.task.columnId
+  };
+})
+
+export const deleteTask = createAsyncThunk('task/deleteTask', async (payload) => {
+  await fetch(`https://todo-api-18-140-52-65.rakamin.com/todos/${payload.task.columnId}/items/${payload.task.id}`, {
+    method: 'DELETE',
+    headers: {
+      "Authorization": `Bearer ${payload.userToken}`,
+    },
+  });
+  return {
+    taskId: payload.task.id,
+    columnId: payload.task.columnId,
   };
 })
 

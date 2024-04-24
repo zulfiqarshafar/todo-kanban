@@ -13,13 +13,13 @@ function CreateEditTaskModal() {
   const dispatch = useDispatch();
 
   function handleCloseModal() {
-    dispatch(modalSlice.actions.toggleModal({ columnId: null, createOrEdit: null }));
+    dispatch(modalSlice.actions.toggleCreateEditModal({ columnId: null, createOrEdit: null }));
   }
 
   function handleSaveTask(e) {
     e.preventDefault();
     dispatch(createTask({ userToken: userData.token, columnId: modal.columnId, task: { name: name, progress } }));
-    dispatch(modalSlice.actions.toggleModal({ columnId: null, createOrEdit: null }));
+    dispatch(modalSlice.actions.toggleCreateEditModal({ columnId: null, createOrEdit: null }));
     setName('');
     setProgress('');
   }
