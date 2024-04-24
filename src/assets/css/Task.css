@@ -1,8 +1,74 @@
 .task {
   background-color: #FAFAFA;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
   padding: 16px;
 }
 
+.no-task {
+  padding: 8px 16px;
+}
+
 .task-title {
-  border-bottom: 1px dashed #E0E0E0;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 24px;
+}
+
+.no-task-title {
+  font-weight: normal;
+  color: #757575;
+}
+
+.task .line-divider {
+  margin: 8px 0;
+  height: 1px;
+  background-image: linear-gradient(to right, #D9D9D9 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: left;
+  background-size: 10px 1px;
+  background-repeat: repeat-x;
+}
+
+.task-description {
+  display: flex;
+}
+
+.progress {
+  width: 100%;
+  margin: 4px 0;
+  display: flex;
+  gap: 12px;
+}
+
+.progress-bar {
+  flex-grow: 1;
+  background-color: #EDEDED;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  display: block;
+  height: 100%;
+  background-color: #01959F;
+}
+
+.progress-bar-full {
+  background-color: #43936C;
+}
+
+.progress-value {
+  display: flex;
+  width: fit-content;
+  color: #757575;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 16px;
+  align-self: center;
+}
+
+.task-description .action-btn {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-left: 26px;
 }
