@@ -3,15 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTasks, selectTasks } from './reducers/taskSlice';
 import userSlice from './reducers/userSlice';
 import Column from './components/Column'
-import AddEditTaskModal from './components/modals/AddEditTaskModal';
+import CreateEditTaskModal from './components/modals/CreateEditTaskModal';
 import './App.css'
+import DeleteTaskModal from './components/modals/DeleteTaskModal';
 
 function App() {
   const taskColumnOne = useSelector(state => selectTasks(state, 1));
   const taskColumnTwo = useSelector(state => selectTasks(state, 2));
   const taskColumnThree = useSelector(state => selectTasks(state, 3));
   const taskColumFour = useSelector(state => selectTasks(state, 4));
-  const createEditModal = useSelector(state => state.createEditModal);
+  const modal = useSelector(state => state.modal);
   const dispatch = useDispatch();
 
   function handleToken() {
@@ -76,7 +77,8 @@ function App() {
         />
       </article>
 
-      { createEditModal.isOpen && <AddEditTaskModal /> }
+      { modal.isCreateEditOpen && <CreateEditTaskModal /> }
+      { modal.isDeleteOpen && <DeleteTaskModal /> }
     </>
   )
 }

@@ -1,4 +1,4 @@
-.create-edit-task-modal-overlay {
+.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,17 +10,20 @@
   z-index: 1;
 }
 
-.create-edit-task-modal {
+.modal {
   margin: auto;
   width: 420px;
-  height: 311px;
   background-color: #FFFFFF;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(41, 39, 39, 0.1);
   font-weight: bold;
 }
 
-.create-edit-task-modal header {
+.create-edit-task-modal {
+  height: 311px;
+}
+
+.modal header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,17 +31,27 @@
   border: none;
 }
 
-.create-edit-task-modal #close-btn {
+.delete-task-modal header {
+  padding-bottom: 16px;
+}
+
+.modal .modal-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal #close-btn {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-.input-form {
+.modal .modal-content {
   padding-inline: 24px;
 }
 
-.input-group {
+.create-edit-task-modal .input-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -47,27 +60,41 @@
   width: fit-content;
 }
 
-.input-group:not(:last-of-type) {
+.create-edit-task-modal .input-group:not(:last-of-type) {
   margin-bottom: 16px;
   width: 100%;
 }
 
-.input-progress-wrapper {
+.create-edit-task-modal .input-progress-wrapper {
   width: 40%;;
 }
 
-.input-group label {
+.create-edit-task-modal .input-group label {
   padding: 3px 0;
 }
 
-.create-edit-task-modal footer {
-  padding-block: 24px;
+.delete-task-modal .modal-content {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.modal footer {
+  padding: 24px;
   display: flex;
   justify-content: flex-end;
   gap: 10px;
 }
 
-.create-edit-task-modal footer button {
+.create-edit-task-modal footer {
+  padding-inline: 0;
+}
+
+.delete-task-modal footer {
+  padding-top: 16px;
+}
+
+.modal footer button {
   font-size: 14px;
   font-weight: bold;
   line-height: 24px;
@@ -75,14 +102,22 @@
   border: 1px solid #E0E0E0;
   background-color: #FFFFFF;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
 }
 
 .create-edit-task-modal #save-task-btn {
   background-color: #01959F;
+  border: 0;
   color: #FFFFFF;
 }
 
 .create-edit-task-modal #save-task-btn:disabled {
   background-color: rgba(1, 149, 159, 0.2);
+  color: #FFFFFF;
+}
+
+.delete-task-modal #delete-task-btn {
+  background-color: #E11428;
+  border: 0;
   color: #FFFFFF;
 }
