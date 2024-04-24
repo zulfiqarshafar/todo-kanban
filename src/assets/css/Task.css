@@ -9,13 +9,13 @@
   padding: 8px 16px;
 }
 
-.task-title {
+.task-name {
   font-size: 14px;
   font-weight: bold;
   line-height: 24px;
 }
 
-.no-task-title {
+.no-task-name {
   font-weight: normal;
   color: #757575;
 }

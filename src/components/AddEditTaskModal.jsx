@@ -18,7 +18,7 @@ function AddEditTaskModal() {
 
   function handleSaveTask(e) {
     e.preventDefault();
-    dispatch(createTask({ userToken: userData.token, columnId: createEditModal.columnId, task: { title: name, progress } }));
+    dispatch(createTask({ userToken: userData.token, columnId: createEditModal.columnId, task: { name: name, progress } }));
     dispatch(createEditModalSlice.actions.toggleModal({ columnId: null, createOrEdit: null }));
     setName('');
     setProgress('');

@@ -19,11 +19,11 @@ function Column({ columnId, columnClass, columnTitle, columnMonth, taskList }) {
       {
         taskList && taskList.length > 0 ? (
           taskList.map(task => (
-            <Task key={task.id} title={task.name} progress={task.progress_percentage || 0} />
+            <Task key={task.id} name={task.name} progress={task.progress_percentage || 0} />
           ))
         ) : (
           <section className='task no-task'>
-            <div className="task-title no-task-title">No Task</div>
+            <div className="task-name no-task-name">No Task</div>
           </section>
         )
       }

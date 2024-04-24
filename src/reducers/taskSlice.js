@@ -91,7 +91,7 @@ export const createTask = createAsyncThunk('task/createTask', async (payload) =>
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      name: payload.task.title,
+      name: payload.task.name,
       progress_percentage: parseInt(payload.task.progress),
     })
   });

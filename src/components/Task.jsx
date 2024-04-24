@@ -3,10 +3,10 @@ import moreIcon from '../assets/images/more-horizontal.svg'
 import checkIcon from '../assets/images/checklist.svg'
 import '../assets/css/Task.css'
 
-function Task({ title, progress }) {
+function Task({ name, progress }) {
   return (
     <section className='task'>
-      <div className="task-title">{ title }</div>
+      <div className="task-name">{ name }</div>
       <div className="line-divider"></div>
       <section className='task-description'>
         <div className='progress'>
