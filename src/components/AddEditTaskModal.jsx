@@ -16,12 +16,13 @@ function AddEditTaskModal() {
     dispatch(createEditModalSlice.actions.toggleModal({ columnId: null, createOrEdit: null }));
   }
 
-  function handleSaveTask() {
+  function handleSaveTask(e) {
+    e.preventDefault();
     dispatch(createTask({ userToken: userData.token, columnId: createEditModal.columnId, task: { title: name, progress } }));
+    dispatch(createEditModalSlice.actions.toggleModal({ columnId: null, createOrEdit: null }));
     setName('');
     setProgress('');
   }
-
 
   return (
     <div className='create-edit-task-modal-overlay'>
@@ -32,20 +33,20 @@ function AddEditTaskModal() {
             <img src={closeIcon} alt="Close icon" />
           </span>
         </header>
-        <section className='input-form'>
+        <form onSubmit={handleSaveTask} className='input-form'>
           <div className="input-group">
             <label htmlFor="input-task-name">Task Name</label>
             <input id="input-task-name" type="text" placeholder='Type your Task' value={name} onChange={e => setName(e.target.value)} />
           </div>
-          <div className="input-group">
+          <div className="input-group input-progress-wrapper">
             <label htmlFor="input-progress">Progress</label>
-            <input id="input-progress" type="text" placeholder='70%' value={progress} onChange={e => setProgress(e.target.value)} />
+            <input id="input-progress" type="number" placeholder='70%' min='0' max='100' value={progress} onChange={e => setProgress(e.target.value)} />
           </div>
-        </section>
-        <footer>
-          <button onClick={handleCloseModal}>Cancel</button>
-          <button id='save-task-btn' onClick={handleSaveTask} disabled={!name || !progress}>Save Task</button>
-        </footer>
+          <footer>
+            <button type='button' onClick={handleCloseModal}>Cancel</button>
+            <button type='submit' id='save-task-btn' disabled={!name || !progress}>Save Task</button>
+          </footer>
+        </form>
       </article>
     </div>
   )

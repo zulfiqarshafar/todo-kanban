@@ -52,8 +52,16 @@
   width: 100%;
 }
 
+.input-progress-wrapper {
+  width: 40%;;
+}
+
+.input-group label {
+  padding: 3px 0;
+}
+
 .create-edit-task-modal footer {
-  padding: 24px;
+  padding-block: 24px;
   display: flex;
   justify-content: flex-end;
   gap: 10px;

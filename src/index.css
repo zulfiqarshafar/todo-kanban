@@ -66,3 +66,14 @@ input:focus, input:focus-visible {
   border: 2px solid rgba(1, 149, 159, 1);
   outline: none;
 }
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
