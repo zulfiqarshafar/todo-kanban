@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import createEditModalSlice from '../reducers/createEditModalSlice';
-import { createTask } from '../reducers/taskSlice';
-import closeIcon from '../assets/images/close.svg'
-import '../assets/css/AddEditTaskModal.css'
+import createEditModalSlice from '../../reducers/createEditModalSlice';
+import { createTask } from '../../reducers/taskSlice';
+import closeIcon from '../../assets/images/close.svg'
+import '../../assets/css/AddEditTaskModal.css'
 
 function AddEditTaskModal() {
   const [name, setName] = useState('')

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTasks, selectTasks } from './reducers/taskSlice';
 import userSlice from './reducers/userSlice';
 import Column from './components/Column'
-import AddEditTaskModal from './components/AddEditTaskModal';
+import AddEditTaskModal from './components/modals/AddEditTaskModal';
 import './App.css'
 
 function App() {
