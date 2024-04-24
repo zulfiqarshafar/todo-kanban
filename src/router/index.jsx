@@ -15,14 +15,17 @@ const appRoute = createRoute({
   component: App,
 });
 
-const notFoundRoute = new NotFoundRoute({
-  getParentRoute: () => rootRoute,
-  component: () => <h3 style={{textAlign: 'center'}}>Page not found</h3>,
-});
-
-
 const routeTree = rootRoute.addChildren([
   appRoute
 ]);
 
-export const router = createRouter({ routeTree, notFoundRoute });
+export const router = createRouter({
+  routeTree,
+  defaultNotFoundComponent: () => {
+    return (
+      <div>
+        <h3 style={{textAlign: 'center'}}>Page not found!</h3>
+      </div>
+    )
+  },
+});
