@@ -1,11 +1,10 @@
-import React from 'react'
 import { useDispatch } from 'react-redux';
 import createEditModalSlice from "../reducers/createEditModalSlice";
 import Task from './Task'
 import plusIcon from '../assets/images/plus-circle.svg'
 import '../assets/css/Column.css'
 
-function Column({ columnId, columnClass, columnTitle, columnMonth }) {
+function Column({ columnId, columnClass, columnTitle, columnMonth, taskList }) {
   const dispatch = useDispatch();
 
   function handleOpenModal() {
@@ -17,11 +16,17 @@ function Column({ columnId, columnClass, columnTitle, columnMonth }) {
       <div className='column-title'>{ columnTitle }</div>
       <div className='column-month'>{ columnMonth }</div>
 
-      <Task title='Data Migration: Performance & Culture End Game' progress='100' />
-
-      <section className='task no-task'>
-        <div className="task-title no-task-title">No Task</div>
-      </section>
+      {
+        taskList && taskList.length > 0 ? (
+          taskList.map(task => (
+            <Task key={task.id} title={task.name} progress={task.progress_percentage || 0} />
+          ))
+        ) : (
+          <section className='task no-task'>
+            <div className="task-title no-task-title">No Task</div>
+          </section>
+        )
+      }
 
       <div className='new-task-btn' onClick={handleOpenModal}>
         <img src={plusIcon} alt="Plus icon" />
