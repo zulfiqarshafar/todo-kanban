@@ -1,0 +1,49 @@
+.action-dropdown {
+  width: 320px;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08);
+}
+
+.action-dropdown ul {
+  list-style-type: none;
+  padding: 0;
+  margin-block: 8px;
+}
+
+.action-dropdown ul li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+.action-dropdown ul li:hover svg path {
+  fill: #01959F;
+  stroke: #01959F;
+}
+
+.action-dropdown ul li:hover {
+  color: #01959F;
+}
+
+.action-dropdown ul li.action-delete:hover svg path {
+  fill: #E11428;
+  stroke: #E11428;
+}
+
+.action-dropdown ul li.action-delete:hover {
+  color: #E11428;
+}
