@@ -19,7 +19,7 @@ function Column({ columnId, columnClass, columnTitle, columnMonth, taskList }) {
       {
         taskList && taskList.length > 0 ? (
           taskList.map(task => (
-            <Task key={task.id} name={task.name} progress={task.progress_percentage || 0} />
+            <Task key={task.id} task={{ ...task, progress: task.progress_percentage || 0 }} />
           ))
         ) : (
           <section className='task no-task'>

@@ -1,18 +1,32 @@
+import { forwardRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { moveTask } from '../reducers/taskSlice';
 import '../assets/css/ActionDropdown.css';
 import { RightArrowIcon } from './icons';
 import { LeftArrowIcon } from './icons';
 import { EditIcon } from './icons';
 import { TrashIcon } from './icons';
 
-function ActionDropdown() {
+const ActionDropdown = forwardRef(({ selectedTask }, ref) => {
+  const userData = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
+  function handleMoveRight(task) {
+    dispatch(moveTask({ userToken: userData.token, task: { id: task.id, name: task.name, columnId: task.todo_id, targetColumnId: task.todo_id + 1 } }));
+  }
+
+  function handleMoveLeft(task) {
+    dispatch(moveTask({ userToken: userData.token, task: { id: task.id, name: task.name, columnId: task.todo_id, targetColumnId: task.todo_id - 1 } }));
+  }
+
   return (
-    <div className='action-dropdown'>
+    <div className='action-dropdown' ref={ref}>
       <ul>
-        <li>
+        <li onClick={() => handleMoveRight(selectedTask)}>
           <RightArrowIcon />
           Move Right
         </li>
-        <li>
+        <li onClick={() => handleMoveLeft(selectedTask)}>
           <LeftArrowIcon />
           Move Left
         </li>
@@ -27,6 +41,8 @@ function ActionDropdown() {
       </ul>
     </div>
   )
-}
+});
+
+ActionDropdown.displayName = "ActionDropdown";
 
 export default ActionDropdown

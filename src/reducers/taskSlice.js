@@ -70,6 +70,13 @@ const taskSlice = createSlice({
         const columnName = `column_${action.payload.columnId}`;
         state.tasks[columnName].push(action.payload.task);
       })
+      .addCase(moveTask.fulfilled, (state, action) => {
+        const prevColumnName = `column_${action.payload.prevColumnId}`;
+        state.tasks[prevColumnName] = state.tasks[prevColumnName].filter(task => task.id != action.payload.task.id)
+
+        const columnName = `column_${action.payload.columnId}`;
+        state.tasks[columnName].push(action.payload.task);
+      })
   }
 });
 
@@ -97,8 +104,28 @@ export const createTask = createAsyncThunk('task/createTask', async (payload) =>
   });
   const newTask = await response.json();
   return {
-    task: { id: newTask.id, name: newTask.name, progress_percentage: newTask.progress_percentage},
+    task: { id: newTask.id, todo_id: newTask.todo_id, name: newTask.name, progress_percentage: newTask.progress_percentage},
     columnId: payload.columnId
+  };
+})
+
+export const moveTask = createAsyncThunk('task/moveTask', async (payload) => {
+  const response = await fetch(`https://todo-api-18-140-52-65.rakamin.com/todos/${payload.task.columnId}/items/${payload.task.id}`, {
+    method: 'PATCH',
+    headers: {
+      "Authorization": `Bearer ${payload.userToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      target_todo_id: parseInt(payload.task.targetColumnId),
+      name: payload.task.name
+    })
+  });
+  const newTask = await response.json();
+  return {
+    task: { id: newTask.id, todo_id: newTask.todo_id, name: newTask.name, progress_percentage: newTask.progress_percentage},
+    columnId: payload.task.targetColumnId,
+    prevColumnId: payload.task.columnId
   };
 })
 

@@ -15,6 +15,7 @@
 }
 
 .action-dropdown ul li {
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 16px;

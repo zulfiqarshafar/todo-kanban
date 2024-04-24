@@ -1,14 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ActionDropdown from './ActionDropdown';
 import moreIcon from '../assets/images/more-horizontal.svg'
 import checkIcon from '../assets/images/checklist.svg'
 import '../assets/css/Task.css'
 
-function Task({ name, progress }) {
+function Task({ task }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null)
 
-  function handleCloseDropdown() {
-    setIsDropdownOpen(false);
+  function handleCloseDropdown(e) {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setIsDropdownOpen(false);
+    }
   }
 
   useEffect(() => {
@@ -21,16 +24,16 @@ function Task({ name, progress }) {
   return (
     <>
       <section className='task'>
-        <div className="task-name">{ name }</div>
+        <div className="task-name">{ task.name }</div>
         <div className="line-divider"></div>
         <section className='task-description'>
           <div className='progress'>
             <div className="progress-bar">
-              <span className={`progress-bar-fill ${ progress == 100 && 'progress-bar-full'}`} style={{ width: `${progress}%`}} ></span>
+              <span className={`progress-bar-fill ${ task.progress == 100 && 'progress-bar-full'}`} style={{ width: `${task.progress}%`}} ></span>
             </div>
             <div className='progress-value'>
               {
-                progress < 100 ? `${progress} %` : (<img src={checkIcon} alt="Check icon" />)
+                task.progress < 100 ? `${ task.progress } %` : (<img src={checkIcon} alt="Check icon" />)
               }
             </div>
           </div>
@@ -39,7 +42,7 @@ function Task({ name, progress }) {
           </div>
         </section>
       {
-        isDropdownOpen && <ActionDropdown />
+        isDropdownOpen && <ActionDropdown selectedTask={ task } ref={ dropdownRef } />
       }
       </section>
 
