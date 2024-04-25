@@ -2,20 +2,27 @@
   background-color: #FAFAFA;
   border: 1px solid #E0E0E0;
   border-radius: 4px;
+  margin-bottom: 8px;
   padding: 16px;
+  position: relative;
+}
+
+.task-list div:last-of-type .task:last-of-type {
+  margin-bottom: 0;
 }
 
 .no-task {
+  margin-bottom: 0;
   padding: 8px 16px;
 }
 
-.task-title {
+.task-name {
   font-size: 14px;
   font-weight: bold;
   line-height: 24px;
 }
 
-.no-task-title {
+.no-task-name {
   font-weight: normal;
   color: #757575;
 }
@@ -71,4 +78,8 @@
   display: flex;
   align-items: center;
   margin-left: 26px;
+}
+
+.task-description .action-btn:hover {
+  background-color: #EDEDED;
 }

@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./userSlice";
-import createEditModalSlice from "./createEditModalSlice";
+import modalSlice from "./modalSlice";
 import taskSlice from "./taskSlice";
 
 const store = configureStore({
   reducer: {
     user: userSlice.reducer,
-    createEditModal: createEditModalSlice.reducer,
+    modal: modalSlice.reducer,
     task: taskSlice.reducer
   }
 })

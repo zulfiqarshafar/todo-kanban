@@ -1,18 +1,24 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTasks, selectTasks } from './reducers/taskSlice';
+import { DragDropContext } from 'react-beautiful-dnd';
+import { dragTask, fetchTasks } from './reducers/taskSlice';
 import userSlice from './reducers/userSlice';
 import Column from './components/Column'
-import AddEditTaskModal from './components/AddEditTaskModal';
+import CreateEditTaskModal from './components/modals/CreateEditTaskModal';
+import DeleteTaskModal from './components/modals/DeleteTaskModal';
 import './App.css'
 
 function App() {
-  const taskColumnOne = useSelector(state => selectTasks(state, 1));
-  const taskColumnTwo = useSelector(state => selectTasks(state, 2));
-  const taskColumnThree = useSelector(state => selectTasks(state, 3));
-  const taskColumFour = useSelector(state => selectTasks(state, 4));
-  const createEditModal = useSelector(state => state.createEditModal);
+  const userData = useSelector(state => state.user);
+  const tasks = useSelector(state => state.task.tasks);
+  const modal = useSelector(state => state.modal);
   const dispatch = useDispatch();
+  const columnData = [
+    { id: '1', month: 'January - March', columnName: 'column-1'},
+    { id: '2', month: 'April - June', columnName: 'column-2'},
+    { id: '3', month: 'July - September', columnName: 'column-3'},
+    { id: '4', month: 'October - December', columnName: 'column-4'}
+  ];
 
   function handleToken() {
     fetch("https://todo-api-18-140-52-65.rakamin.com/auth/login", {
@@ -26,13 +32,22 @@ function App() {
       }),
     })
     .then((response) => response.json())
-    .then((userData) => {
-      dispatch(userSlice.actions.setToken({ token: userData.auth_token }));
-      dispatch(fetchTasks({ userToken: userData.auth_token, columnId: 1 }));
-      dispatch(fetchTasks({ userToken: userData.auth_token, columnId: 2 }));
-      dispatch(fetchTasks({ userToken: userData.auth_token, columnId: 3 }));
-      dispatch(fetchTasks({ userToken: userData.auth_token, columnId: 4 }));
+    .then((response) => {
+      dispatch(userSlice.actions.setToken({ token: response.auth_token }));
+      dispatch(fetchTasks({ userToken: response.auth_token, columnId: 1 }));
+      dispatch(fetchTasks({ userToken: response.auth_token, columnId: 2 }));
+      dispatch(fetchTasks({ userToken: response.auth_token, columnId: 3 }));
+      dispatch(fetchTasks({ userToken: response.auth_token, columnId: 4 }));
     });
+  }
+
+  async function handleDragTask(result) {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) return;
+    if (destination.droppableId === source.droppableId && destination.index === source.index) return;
+
+    dispatch(dragTask({ userToken: userData.token, task: { id: draggableId, columnId: source.droppableId, targetColumnId: destination.droppableId } }));
   }
 
   useEffect(() => {
@@ -41,42 +56,29 @@ function App() {
 
   return (
     <>
-      <header>
-        <div className='title'>Product Roadmap</div>
-      </header>
+      <DragDropContext onDragEnd={handleDragTask}>
+        <header>
+          <div className='title'>Product Roadmap</div>
+        </header>
 
-      <article id='content'>
-        <Column
-          columnId='1'
-          columnClass='column-group-1'
-          columnTitle='Group Task 1'
-          columnMonth='January - March'
-          taskList={taskColumnOne}
-        />
-        <Column
-          columnId='2'
-          columnClass='column-group-2'
-          columnTitle='Group Task 2'
-          columnMonth='April - June'
-          taskList={taskColumnTwo}
-        />
-        <Column
-          columnId='3'
-          columnClass='column-group-3'
-          columnTitle='Group Task 3'
-          columnMonth='July - September'
-          taskList={taskColumnThree}
-        />
-        <Column
-          columnId='4'
-          columnClass='column-group-4'
-          columnTitle='Group Task 4'
-          columnMonth='October - December'
-          taskList={taskColumFour}
-        />
-      </article>
+        <article id='content'>
+          {
+            columnData.map(column => (
+              <Column
+                key={column.id}
+                columnId={column.id}
+                columnClass={column.columnName}
+                columnTitle={`Group Task ${column.id}`}
+                columnMonth={column.month}
+                taskList={tasks[column.columnName]}
+              />
+            ))
+          }
+        </article>
 
-      { createEditModal.isOpen && <AddEditTaskModal /> }
+        { modal.isCreateEditOpen && <CreateEditTaskModal /> }
+        { modal.isDeleteOpen && <DeleteTaskModal /> }
+      </DragDropContext>
     </>
   )
 }
