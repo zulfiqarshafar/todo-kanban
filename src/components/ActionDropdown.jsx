@@ -13,11 +13,11 @@ const ActionDropdown = forwardRef(({ selectedTask, setIsDropdownOpen }, ref) => 
   const dispatch = useDispatch();
 
   function handleMoveRight(task) {
-    dispatch(moveTask({ userToken: userData.token, task: { id: task.id, name: task.name, columnId: task.todo_id, targetColumnId: task.todo_id + 1 } }));
+    dispatch(moveTask({ userToken: userData.token, task: { id: task.id, columnId: task.todo_id, targetColumnId: task.todo_id + 1 } }));
   }
 
   function handleMoveLeft(task) {
-    dispatch(moveTask({ userToken: userData.token, task: { id: task.id, name: task.name, columnId: task.todo_id, targetColumnId: task.todo_id - 1 } }));
+    dispatch(moveTask({ userToken: userData.token, task: { id: task.id, columnId: task.todo_id, targetColumnId: task.todo_id - 1 } }));
   }
 
   function handleDelete(task) {
