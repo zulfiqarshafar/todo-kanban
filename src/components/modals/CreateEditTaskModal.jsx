@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import modalSlice from '../../reducers/modalSlice';
-import { createTask } from '../../reducers/taskSlice';
+import { createTask, deleteTask } from '../../reducers/taskSlice';
 import closeIcon from '../../assets/images/close.svg'
 import '../../assets/css/Modal.css'
 
@@ -13,16 +13,28 @@ function CreateEditTaskModal() {
   const dispatch = useDispatch();
 
   function handleCloseModal() {
-    dispatch(modalSlice.actions.toggleCreateEditModal({ columnId: null, createOrEdit: null }));
+    dispatch(modalSlice.actions.toggleCreateEditModal({ columnId: null, createOrEdit: null, task: {} }));
   }
 
   function handleSaveTask(e) {
     e.preventDefault();
-    dispatch(createTask({ userToken: userData.token, columnId: modal.columnId, task: { name: name, progress } }));
-    dispatch(modalSlice.actions.toggleCreateEditModal({ columnId: null, createOrEdit: null }));
+    if (modal.createOrEdit == 'create') {
+      dispatch(createTask({ userToken: userData.token, columnId: modal.columnId, task: { name: name, progress } }));
+    } else {
+      dispatch(deleteTask({ userToken: userData.token, task: { id: modal.taskId, columnId: modal.columnId } }));
+      dispatch(createTask({ userToken: userData.token, columnId: modal.columnId, task: { name: name, progress } }));
+    }
+    dispatch(modalSlice.actions.toggleCreateEditModal({ columnId: null, createOrEdit: null, task: {} }));
     setName('');
     setProgress('');
   }
+
+  useEffect(() => {
+    if (modal.task.name && modal.task.progress != undefined) {
+      setName(modal.task.name);
+      setProgress(modal.task.progress);
+    }
+  }, [modal.task])
 
   return (
     <div className='modal-overlay'>

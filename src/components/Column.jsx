@@ -9,7 +9,7 @@ function Column({ columnId, columnClass, columnTitle, columnMonth, taskList }) {
   const dispatch = useDispatch();
 
   function handleOpenModal() {
-    dispatch(modalSlice.actions.toggleCreateEditModal({ columnId: columnId, createOrEdit: 'create' }));
+    dispatch(modalSlice.actions.toggleCreateEditModal({ columnId: columnId, createOrEdit: 'create', task: {} }));
   }
 
   return (

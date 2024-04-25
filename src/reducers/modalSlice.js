@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const modalSlice = createSlice({
   name: "modal",
   initialState: {
+    task: {},
     createOrEdit: null,
     isCreateEditOpen: false,
     isDeleteOpen: false,
@@ -11,6 +12,8 @@ const modalSlice = createSlice({
   },
   reducers: {
     toggleCreateEditModal: (state, action) => {
+      state.task = action.payload.task;
+      state.taskId = action.payload.task.id || null;
       state.createOrEdit = action.payload.createOrEdit;
       state.isCreateEditOpen = !state.isCreateEditOpen;
       state.columnId = action.payload.columnId;

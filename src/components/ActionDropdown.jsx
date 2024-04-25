@@ -20,6 +20,11 @@ const ActionDropdown = forwardRef(({ selectedTask, setIsDropdownOpen }, ref) => 
     dispatch(moveTask({ userToken: userData.token, task: { id: task.id, columnId: task.todo_id, targetColumnId: task.todo_id - 1 } }));
   }
 
+  function handleEdit(task) {
+    setIsDropdownOpen(false);
+    dispatch(modalSlice.actions.toggleCreateEditModal({ columnId: task.todo_id, createOrEdit: 'edit', task }));
+  }
+
   function handleDelete(task) {
     setIsDropdownOpen(false);
     dispatch(modalSlice.actions.toggleDeleteModal({ taskId: task.id, columnId: task.todo_id }));
@@ -36,7 +41,7 @@ const ActionDropdown = forwardRef(({ selectedTask, setIsDropdownOpen }, ref) => 
           <LeftArrowIcon />
           Move Left
         </li>
-        <li>
+        <li onClick={() => handleEdit(selectedTask)}>
           <EditIcon />
           Edit
         </li>
