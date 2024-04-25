@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
     "@tanstack/react-router": "^1.29.2",
+    "@tanstack/router-vite-plugin": "^1.30.0",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
