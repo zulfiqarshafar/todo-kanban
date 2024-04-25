@@ -6,7 +6,7 @@ This project is a app for coding test at Rakamin Academy built using React JS, V
 
 ## Live Preview
 
-Project is lived at <a href="#" target="_blank">To Do Kanban Board</a>
+Project is lived at <a href="https://zulfiqars-kanban.vercel.app/v1" target="_blank">To Do Kanban Board</a>
 
 <br />
 
@@ -44,7 +44,7 @@ npm run install
 
 ### Start
 
-To run to project use
+To run the project use
 
 ```
 npm run dev
